@@ -23,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         ImageView logo = findViewById(R.id.logoImage);
-        Button skipBtn = findViewById(R.id.btnSkip);
+
 
         // Animation
         ObjectAnimator scaleX = ObjectAnimator.ofFloat(logo, "scaleX", 1f, 1.1f, 1f);
@@ -32,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(scaleX, scaleY, rotate);
-        animatorSet.setDuration(1800);
+        animatorSet.setDuration(4000);
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
         animatorSet.start();
 
@@ -44,10 +44,7 @@ public class SplashActivity extends AppCompatActivity {
         };
         handler.postDelayed(runnable, SPLASH_TIME);
 
-        skipBtn.setOnClickListener(v -> {
-            handler.removeCallbacks(runnable);
-            openMain();
-        });
+
     }
 
     private void openMain() {
