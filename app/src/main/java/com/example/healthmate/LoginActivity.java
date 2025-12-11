@@ -1,43 +1,51 @@
 package com.example.healthmate;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText email, password;
-    Button loginBtn;
-    TextView goToRegister;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        email = findViewById(R.id.etEmail);
-        password = findViewById(R.id.etPassword);
-        loginBtn = findViewById(R.id.btnLogin);
-        goToRegister = findViewById(R.id.tvRegister);
+        mAuth = FirebaseAuth.getInstance();
+
+        EditText email = findViewById(R.id.emailInput);
+        EditText password = findViewById(R.id.passwordInput);
+        Button loginBtn = findViewById(R.id.loginBtn);
+        TextView registerRedirect = findViewById(R.id.registerRedirect);
+
+        registerRedirect.setOnClickListener(v ->
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
 
         loginBtn.setOnClickListener(v -> {
-            if(email.getText().toString().isEmpty() ||
-                    password.getText().toString().isEmpty()){
-                Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
-            } else {
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                finish();
-            }
-        });
+            String e = email.getText().toString();
+            String p = password.getText().toString();
 
-        goToRegister.setOnClickListener(v ->
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class))
-        );
+            if(e.isEmpty() || p.isEmpty()){
+                Toast.makeText(this, "Enter Email & Password!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            mAuth.signInWithEmailAndPassword(e, p)
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(this, HomeActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(this, "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        });
     }
 }
