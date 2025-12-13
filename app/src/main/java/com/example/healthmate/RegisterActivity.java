@@ -23,34 +23,39 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         userRef = FirebaseDatabase.getInstance().getReference("Users");
 
-        EditText name = findViewById(R.id.nameInput);
-        EditText email = findViewById(R.id.emailInput);
-        EditText password = findViewById(R.id.passwordInput);
+        EditText name = findViewById(R.id.regName);
+        EditText email = findViewById(R.id.regEmail);
+        EditText password = findViewById(R.id.regPassword);
         Button registerBtn = findViewById(R.id.registerBtn);
         TextView loginRedirect = findViewById(R.id.loginRedirect);
 
         loginRedirect.setOnClickListener(v ->
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class)));
+                startActivity(new Intent(this, LoginActivity.class)));
 
         registerBtn.setOnClickListener(v -> {
-            String n = name.getText().toString();
-            String e = email.getText().toString();
-            String p = password.getText().toString();
+            String n = name.getText().toString().trim();
+            String e = email.getText().toString().trim();
+            String p = password.getText().toString().trim();
 
-            if(n.isEmpty() || e.isEmpty() || p.isEmpty()){
+            if (n.isEmpty() || e.isEmpty() || p.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (p.length() < 6) {
+                Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             mAuth.createUserWithEmailAndPassword(e, p)
                     .addOnCompleteListener(task -> {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             String uid = mAuth.getCurrentUser().getUid();
 
-                            userRef.child(uid).child("name").setValue(n);
+                            userRef.child(uid).child("fullName").setValue(n);
                             userRef.child(uid).child("email").setValue(e);
 
-                            Toast.makeText(this, "Account Created!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Account Created Successfully!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(this, LoginActivity.class));
                             finish();
                         } else {
