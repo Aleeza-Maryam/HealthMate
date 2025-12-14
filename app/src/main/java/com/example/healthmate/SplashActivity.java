@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import com.google.firebase.auth.FirebaseAuth;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -48,8 +50,11 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void openMain() {
-        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-        startActivity(intent);
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            startActivity(new Intent(this, DashboardActivity.class));
+        } else {
+            startActivity(new Intent(this, LoginActivity.class));
+        }
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         finish();
     }

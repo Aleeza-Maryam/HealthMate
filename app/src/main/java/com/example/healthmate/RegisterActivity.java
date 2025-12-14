@@ -28,6 +28,10 @@ public class RegisterActivity extends AppCompatActivity {
         EditText password = findViewById(R.id.regPassword);
         Button registerBtn = findViewById(R.id.registerBtn);
         TextView loginRedirect = findViewById(R.id.loginRedirect);
+        ImageView backBtn = findViewById(R.id.backBtn); // New back button
+
+        // Back button functionality (optional enhancement)
+        backBtn.setOnClickListener(v -> onBackPressed());
 
         loginRedirect.setOnClickListener(v ->
                 startActivity(new Intent(this, LoginActivity.class)));

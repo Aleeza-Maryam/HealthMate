@@ -2,10 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,32 +13,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthMate">
-
-        <!-- Home screen -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DashboardActivity"
+            android:exported="false" /> <!-- Home screen -->
         <activity
             android:name=".HomeActivity"
-            android:exported="false" />
-
-        <!-- Register screen -->
+            android:exported="false" /> <!-- Register screen -->
         <activity
             android:name=".RegisterActivity"
-            android:exported="true" />
-
-        <!-- Login screen -->
+            android:exported="true" /> <!-- Login screen -->
         <activity
             android:name=".LoginActivity"
-            android:exported="true" />
-
-        <!-- Splash screen -->
+            android:exported="true" /> <!-- Splash screen -->
         <activity
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

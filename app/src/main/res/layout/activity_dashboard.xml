@@ -1,0 +1,24 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F9FF">
+
+    <GridLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:columnCount="2"
+        android:padding="16dp">
+
+        <Button android:text="👤 Profile" />
+        <Button android:text="💧 Water Tracker" />
+        <Button android:text="😴 Sleep Tracker" />
+        <Button android:text="⚖ Weight / Steps" />
+        <Button android:text="🩺 Symptom Checker" />
+        <Button android:text="🍎 Diet / Nutrition" />
+        <Button android:text="💬 Health Chatbot" />
+        <Button android:text="🚨 SOS Emergency" />
+        <Button android:text="📊 Reports" />
+        <Button android:text="🚪 Logout" />
+
+    </GridLayout>
+</ScrollView>
