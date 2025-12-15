@@ -25,13 +25,18 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        // 🔐 Firebase user id
+        // 🔐 SAFETY CHECK
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }
+
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         userRef = FirebaseDatabase.getInstance()
                 .getReference("Users")
                 .child(uid);
 
-        // 🔗 Bind views
         name = findViewById(R.id.fullName);
         age = findViewById(R.id.age);
         gender = findViewById(R.id.gender);
@@ -43,9 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             if (name.getText().toString().isEmpty()
                     || age.getText().toString().isEmpty()
-                    || gender.getText().toString().isEmpty()
-                    || weight.getText().toString().isEmpty()
-                    || height.getText().toString().isEmpty()) {
+                    || gender.getText().toString().isEmpty()) {
 
                 Toast.makeText(this,
                         "Please fill all fields",
@@ -53,17 +56,12 @@ public class ProfileActivity extends AppCompatActivity {
                 return;
             }
 
-            // 💾 Save data
             userRef.child("fullName").setValue(name.getText().toString());
             userRef.child("age").setValue(age.getText().toString());
             userRef.child("gender").setValue(gender.getText().toString());
             userRef.child("weight").setValue(weight.getText().toString());
             userRef.child("height").setValue(height.getText().toString());
             userRef.child("profileCompleted").setValue(true);
-
-            Toast.makeText(this,
-                    "Profile saved successfully",
-                    Toast.LENGTH_SHORT).show();
 
             startActivity(new Intent(this, DashboardActivity.class));
             finish();

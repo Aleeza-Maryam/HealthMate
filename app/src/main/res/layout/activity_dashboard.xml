@@ -18,7 +18,8 @@
         <Button android:text="💬 Health Chatbot" />
         <Button android:text="🚨 SOS Emergency" />
         <Button android:text="📊 Reports" />
-        <Button android:text="🚪 Logout" />
+        <Button android:text="🚪 Logout"
+            android:id="@+id/logoutBtn"/>
 
     </GridLayout>
 </ScrollView>

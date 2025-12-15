@@ -16,9 +16,11 @@
         <activity
             android:name=".ProfileActivity"
             android:exported="false" />
+
         <activity
             android:name=".DashboardActivity"
-            android:exported="false" /> <!-- Home screen -->
+            android:exported="false" />
+
         <activity
             android:name=".HomeActivity"
             android:exported="false" /> <!-- Register screen -->

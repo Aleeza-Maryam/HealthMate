@@ -28,6 +28,46 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        if (mAuth.getCurrentUser() != null) {
+
+            String uid = mAuth.getCurrentUser().getUid();
+            DatabaseReference userRef = FirebaseDatabase.getInstance()
+                    .getReference("Users")
+                    .child(uid);
+
+            userRef.child("profileCompleted")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+
+                            boolean completed = snapshot.exists()
+                                    && Boolean.TRUE.equals(snapshot.getValue(Boolean.class));
+
+                            if (completed) {
+                                startActivity(new Intent(
+                                        LoginActivity.this,
+                                        DashboardActivity.class));
+                            } else {
+                                startActivity(new Intent(
+                                        LoginActivity.this,
+                                        ProfileActivity.class));
+                            }
+
+                            finish();
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            Toast.makeText(LoginActivity.this,
+                                    "Database Error",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+            return; // 🔴 VERY IMPORTANT
+        }
+
+
         EditText email = findViewById(R.id.emailInput);
         EditText password = findViewById(R.id.passwordInput);
         Button loginBtn = findViewById(R.id.loginBtn);
@@ -50,6 +90,9 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
 
                         if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this,
+                                "Login Success, checking profile...",
+                                Toast.LENGTH_SHORT).show();
 
                             String uid = mAuth.getCurrentUser().getUid();
                             userRef = FirebaseDatabase.getInstance()
@@ -63,13 +106,24 @@ public class LoginActivity extends AppCompatActivity {
                                         public void onDataChange(DataSnapshot snapshot) {
 
                                             boolean completed = snapshot.exists()
-                                                    && snapshot.getValue(Boolean.class);
+                                                    && Boolean.TRUE.equals(snapshot.getValue(Boolean.class));
 
                                             if (completed) {
+
+                                                Toast.makeText(LoginActivity.this,
+                                                        "Opening Dashboard",
+                                                        Toast.LENGTH_SHORT).show();
+
                                                 startActivity(new Intent(
                                                         LoginActivity.this,
                                                         DashboardActivity.class));
+
                                             } else {
+
+                                                Toast.makeText(LoginActivity.this,
+                                                        "Opening Profile",
+                                                        Toast.LENGTH_SHORT).show();
+
                                                 startActivity(new Intent(
                                                         LoginActivity.this,
                                                         ProfileActivity.class));
