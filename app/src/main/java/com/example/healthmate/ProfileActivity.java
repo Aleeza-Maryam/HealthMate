@@ -1,14 +1,19 @@
 package com.example.healthmate;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.*;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -16,10 +21,15 @@ public class ProfileActivity extends AppCompatActivity {
     TextView genderText;
     LinearLayout genderContainer;
     Button saveBtn;
+    ImageView profileImage, backBtn;
 
     DatabaseReference userRef;
+    StorageReference storageRef;
     String uid;
     String selectedGender = "";
+    Uri imageUri;
+
+    private static final int PICK_IMAGE_REQUEST = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +44,8 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        userRef = FirebaseDatabase.getInstance()
-                .getReference("Users")
-                .child(uid);
+        userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
+        storageRef = FirebaseStorage.getInstance().getReference("profile_images");
 
         // Initialize views
         name = findViewById(R.id.fullName);
@@ -46,9 +55,16 @@ public class ProfileActivity extends AppCompatActivity {
         saveBtn = findViewById(R.id.saveProfileBtn);
         genderText = findViewById(R.id.genderText);
         genderContainer = findViewById(R.id.genderContainer);
+        profileImage = findViewById(R.id.profileImage);
+        backBtn = findViewById(R.id.backBtn);
+
+        // Set up profile image click listener
+        profileImage.setOnClickListener(v -> openGallery());
+
+        // Load existing profile image if available
+        loadProfileImage();
 
         // Back button
-        ImageView backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(v -> onBackPressed());
 
         // Gender dropdown
@@ -107,5 +123,62 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(new Intent(this, DashboardActivity.class));
             finish();
         });
+    }
+
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+            profileImage.setImageURI(imageUri);
+            uploadImage();
+        }
+    }
+
+    private void uploadImage() {
+        if (imageUri == null) return;
+
+        StorageReference fileRef = storageRef.child(uid + ".jpg");
+
+        fileRef.putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot -> {
+                    fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                        userRef.child("profileImage").setValue(uri.toString());
+                        Toast.makeText(this, "Profile picture uploaded", Toast.LENGTH_SHORT).show();
+                    });
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void loadProfileImage() {
+        userRef.child("profileImage").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            String url = snapshot.getValue(String.class);
+                            if (url != null && !url.isEmpty()) {
+                                Glide.with(ProfileActivity.this)
+                                        .load(url)
+                                        .placeholder(R.drawable.ic_profile_avatar)
+                                        .into(profileImage);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Handle error if needed
+                    }
+                });
     }
 }

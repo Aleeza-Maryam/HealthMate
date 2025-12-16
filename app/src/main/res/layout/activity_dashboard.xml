@@ -9,7 +9,7 @@
         android:columnCount="2"
         android:padding="16dp">
 
-        <Button android:text="👤 Profile" />
+        <Button android:text="👤 Profile"  android:id="@+id/profileBtn"/>
         <Button android:text="💧 Water Tracker" />
         <Button android:text="😴 Sleep Tracker" />
         <Button android:text="⚖ Weight / Steps" />
