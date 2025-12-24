@@ -22,7 +22,8 @@ public class DashboardActivity extends AppCompatActivity {
 
 
         profileBtn.setOnClickListener(v -> {
-            startActivity(new Intent(DashboardActivity.this, ProfileViewActivity.class));
+            startActivity(new Intent(DashboardActivity.this, ProfileActivity.class));
+
         });
 
         logoutBtn.setOnClickListener(v -> {
