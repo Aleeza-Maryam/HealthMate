@@ -17,16 +17,14 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        // Initialize buttons AFTER setContentView
         logoutBtn = findViewById(R.id.logoutBtn);
         profileBtn = findViewById(R.id.profileBtn);
 
-        // Profile button click listener
+
         profileBtn.setOnClickListener(v -> {
             startActivity(new Intent(DashboardActivity.this, ProfileViewActivity.class));
         });
 
-        // Logout button click listener
         logoutBtn.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
 
