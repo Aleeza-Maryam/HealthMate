@@ -3,7 +3,6 @@ package com.example.healthmate;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -14,6 +13,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.HashMap;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -36,7 +37,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        // 🔐 SAFETY CHECK
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
@@ -47,7 +47,6 @@ public class ProfileActivity extends AppCompatActivity {
         userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
         storageRef = FirebaseStorage.getInstance().getReference("profile_images");
 
-        // Initialize views
         name = findViewById(R.id.fullName);
         age = findViewById(R.id.age);
         weight = findViewById(R.id.weight);
@@ -58,127 +57,106 @@ public class ProfileActivity extends AppCompatActivity {
         profileImage = findViewById(R.id.profileImage);
         backBtn = findViewById(R.id.backBtn);
 
-        // Set up profile image click listener
         profileImage.setOnClickListener(v -> openGallery());
-
-        // Load existing profile image if available
-        loadProfileImage();
-
-        // Back button
         backBtn.setOnClickListener(v -> onBackPressed());
 
-        // Gender dropdown
-        final String[] genders = {"Male", "Female", "Other"};
+        loadUserData();
+        loadProfileImage();
 
+        String[] genders = {"Male", "Female", "Other"};
         genderContainer.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Select Gender")
                     .setItems(genders, (dialog, which) -> {
                         selectedGender = genders[which];
                         genderText.setText(selectedGender);
-                        genderText.setTextColor(getResources().getColor(android.R.color.black));
-                    });
-            builder.create().show();
+                    }).show();
         });
 
-        saveBtn.setOnClickListener(v -> {
-            String n = name.getText().toString().trim();
-            String a = age.getText().toString().trim();
-            String w = weight.getText().toString().trim();
-            String h = height.getText().toString().trim();
+        saveBtn.setOnClickListener(v -> saveProfile());
+    }
 
-            if (n.isEmpty() || a.isEmpty() || selectedGender.isEmpty()) {
-                Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
-                return;
-            }
+    private void saveProfile() {
+        String n = name.getText().toString().trim();
+        String a = age.getText().toString().trim();
+        String w = weight.getText().toString().trim();
+        String h = height.getText().toString().trim();
 
-            // Validate age
-            try {
-                int ageValue = Integer.parseInt(a);
-                if (ageValue < 1 || ageValue > 120) {
-                    Toast.makeText(this, "Please enter a valid age (1-120)", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            } catch (NumberFormatException e) {
-                Toast.makeText(this, "Please enter a valid age", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        if (n.isEmpty() || a.isEmpty() || selectedGender.isEmpty()) {
+            Toast.makeText(this, "Fill required fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-            // Save to Firebase
-            userRef.child("fullName").setValue(n);
-            userRef.child("age").setValue(a);
-            userRef.child("gender").setValue(selectedGender);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("fullName", n);
+        map.put("age", a);
+        map.put("gender", selectedGender);
+        map.put("weight", w);
+        map.put("height", h);
+        map.put("profileCompleted", true);
 
-            if (!w.isEmpty()) {
-                userRef.child("weight").setValue(w);
-            }
-
-            if (!h.isEmpty()) {
-                userRef.child("height").setValue(h);
-            }
-
-            userRef.child("profileCompleted").setValue(true);
-
-            Toast.makeText(this, "Profile saved successfully!", Toast.LENGTH_SHORT).show();
+        userRef.updateChildren(map).addOnSuccessListener(unused -> {
+            Toast.makeText(this, "Profile Saved", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, DashboardActivity.class));
             finish();
         });
     }
 
+    private void loadUserData() {
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot s) {
+                if (s.exists()) {
+                    name.setText(s.child("fullName").getValue(String.class));
+                    age.setText(s.child("age").getValue(String.class));
+                    weight.setText(s.child("weight").getValue(String.class));
+                    height.setText(s.child("height").getValue(String.class));
+                    selectedGender = s.child("gender").getValue(String.class);
+                    genderText.setText(selectedGender);
+                }
+            }
+
+            @Override public void onCancelled(DatabaseError error) {}
+        });
+    }
+
     private void openGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        Intent i = new Intent(Intent.ACTION_PICK);
+        i.setType("image/*");
+        startActivityForResult(i, PICK_IMAGE_REQUEST);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imageUri = data.getData();
+    protected void onActivityResult(int r, int c, @Nullable Intent d) {
+        super.onActivityResult(r, c, d);
+        if (r == PICK_IMAGE_REQUEST && c == RESULT_OK && d != null) {
+            imageUri = d.getData();
             profileImage.setImageURI(imageUri);
             uploadImage();
         }
     }
 
     private void uploadImage() {
-        if (imageUri == null) return;
-
-        StorageReference fileRef = storageRef.child(uid + ".jpg");
-
-        fileRef.putFile(imageUri)
-                .addOnSuccessListener(taskSnapshot -> {
-                    fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                        userRef.child("profileImage").setValue(uri.toString());
-                        Toast.makeText(this, "Profile picture uploaded", Toast.LENGTH_SHORT).show();
-                    });
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+        StorageReference ref = storageRef.child(uid + ".jpg");
+        ref.putFile(imageUri).addOnSuccessListener(task ->
+                ref.getDownloadUrl().addOnSuccessListener(uri ->
+                        userRef.child("profileImage").setValue(uri.toString())
+                ));
     }
 
     private void loadProfileImage() {
         userRef.child("profileImage").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            String url = snapshot.getValue(String.class);
-                            if (url != null && !url.isEmpty()) {
-                                Glide.with(ProfileActivity.this)
-                                        .load(url)
-                                        .placeholder(R.drawable.ic_profile_avatar)
-                                        .into(profileImage);
-                            }
-                        }
+                    public void onDataChange(DataSnapshot s) {
+                        String url = s.getValue(String.class);
+                        if (url != null)
+                            Glide.with(ProfileActivity.this).load(url)
+                                    .placeholder(R.drawable.ic_profile_avatar)
+                                    .into(profileImage);
                     }
 
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        // Handle error if needed
-                    }
+                    @Override public void onCancelled(DatabaseError error) {}
                 });
     }
 }
