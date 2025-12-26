@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthMate">
         <activity
+            android:name=".HealthTrackingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProfileViewActivity"
             android:exported="false" />
         <activity

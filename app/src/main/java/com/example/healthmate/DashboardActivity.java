@@ -16,7 +16,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference userRef;
-
+    CardView waterCard;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +24,15 @@ public class DashboardActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         checkUser();
+        waterCard = findViewById(R.id.waterCard);
+
+        waterCard.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    DashboardActivity.this,
+                    HealthTrackingActivity.class
+            );
+            startActivity(intent);
+        });
     }
 
     private void checkUser() {
@@ -69,6 +78,7 @@ public class DashboardActivity extends AppCompatActivity {
         profileBtn.setOnClickListener(v ->
                 startActivity(new Intent(this, ProfileActivity.class))
         );
+
 
         logoutBtn.setOnClickListener(v -> logoutUser());
     }
