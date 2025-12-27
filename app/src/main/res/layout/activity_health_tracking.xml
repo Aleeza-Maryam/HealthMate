@@ -1,78 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="24dp">
 
-        <!-- WATER -->
+        <!-- Header -->
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Water Intake (Glasses)"
+            android:text="Daily Health Tracker"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_marginBottom="30dp"
+            android:padding="12dp"
+            android:background="@drawable/rounded_header"/>
+
+        <!-- WATER CARD -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="@color/light_pink">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💧 Water Intake"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_purple"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Glasses consumed today"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray"
+                    android:layout_marginBottom="16dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <!-- Use Button instead of MaterialButton to avoid iconPadding issues -->
+                    <Button
+                        android:id="@+id/btnAddWater"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:text="+"
+                        android:textSize="24sp"
+                        android:textColor="@color/white"
+                        android:background="@drawable/rounded_button_purple"
+                        android:drawableStart="@drawable/ic_water_drop"
+                        android:drawableTint="@color/white"
+                        android:drawablePadding="4dp"/>
+
+                    <TextView
+                        android:id="@+id/txtWater"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0"
+                        android:textSize="36sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/dark_purple"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="glasses"
+                        android:textSize="14sp"
+                        android:textColor="@color/textDark"
+                        android:layout_marginStart="8dp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- SLEEP CARD -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="@color/light_blue">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="😴 Sleep Hours"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/textDark"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hours of sleep last night"
+                    android:textSize="14sp"
+                    android:textColor="@color/textDark"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Use android:hint instead of app:hint -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter hours"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxStrokeColor="@color/blue"
+                    app:startIconDrawable="@drawable/ic_sleep"
+                    app:startIconTint="@color/blue">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtSleep"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:textSize="16sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- WEIGHT CARD -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            android:layout_marginBottom="30dp"
+            app:cardBackgroundColor="@color/light_purple">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚖️ Weight"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/textDark"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Current weight in kg"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray"
+                    android:layout_marginBottom="16dp"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter weight"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxStrokeColor="@color/purple"
+                    app:startIconDrawable="@drawable/ic_weight"
+                    app:startIconTint="@color/purple"
+                    app:endIconDrawable="@drawable/ic_weight"
+                    app:endIconTint="@color/purple">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtWeight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:textSize="16sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- SAVE BUTTON - Using regular Button with background drawable -->
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="SAVE HEALTH DATA"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:letterSpacing="0.1"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_button_gradient"
+            android:drawableStart="@drawable/ic_water_drop"
+            android:drawableTint="@color/white"
+            android:drawablePadding="12dp"/>
 
+        <!-- Tips Section -->
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/btnAddWater"
-                android:text="+"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="24dp"
+            android:padding="16dp"
+            android:background="@drawable/rounded_tips">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtWater"
-                android:text="0"
-                android:textSize="20sp"
-                android:layout_marginStart="20dp"/>
+                android:text="💡 Health Tips"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/dark_purple"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="• Drink 8+ glasses of water daily\n• Aim for 7-9 hours of sleep\n• Track weight weekly for best results"
+                android:textSize="14sp"
+                android:textColor="@color/gray"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="4dp"/>
         </LinearLayout>
-
-        <!-- SLEEP -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sleep Hours"
-            android:textSize="18sp"
-            android:layout_marginTop="20dp"/>
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/edtSleep"
-            android:inputType="number"
-            android:hint="Enter hours"/>
-
-        <!-- WEIGHT -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Weight (kg)"
-            android:textSize="18sp"
-            android:layout_marginTop="20dp"/>
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/edtWeight"
-            android:inputType="number"
-            android:hint="Enter weight"/>
-
-        <!-- SAVE -->
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnSave"
-            android:text="Save"
-            android:layout_marginTop="30dp"/>
     </LinearLayout>
 </ScrollView>

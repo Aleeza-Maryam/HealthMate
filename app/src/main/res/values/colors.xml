@@ -4,4 +4,19 @@
     <color name="lightBlue">#EAF3FF</color>
     <color name="white">#FFFFFF</color>
     <color name="textDark">#2C2C2C</color>
+
+
+    <color name="purple">#9C27B0</color>
+    <color name="light_purple">#F3E5F5</color>
+    <color name="dark_purple">#6A1B9A</color>
+
+
+    <color name="light_blue">#E3F2FD</color>
+    <color name="dark_blue">#1565C0</color>
+
+    <color name="light_pink">#FCE4EC</color>
+
+    <color name="gradient_purple">#8E24AA</color>
+
+    <color name="gray">#757575</color>
 </resources>

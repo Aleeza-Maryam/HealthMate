@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthMate">
         <activity
+            android:name=".SleepActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DietActivity"
+            android:exported="false" />
+        <activity
             android:name=".HealthTrackingActivity"
             android:exported="false" />
         <activity

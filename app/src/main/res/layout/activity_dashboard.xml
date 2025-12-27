@@ -258,7 +258,7 @@
 
             <!-- Sleep Card -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/sleepBtn"
+                android:id="@+id/sleepCard"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 app:cardCornerRadius="12dp"

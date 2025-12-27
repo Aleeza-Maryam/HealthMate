@@ -17,6 +17,8 @@ public class DashboardActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference userRef;
     CardView waterCard;
+    CardView sleepcard;
+    CardView dietBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +27,7 @@ public class DashboardActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         checkUser();
         waterCard = findViewById(R.id.waterCard);
-
+        dietBtn = findViewById(R.id.dietBtn);
         waterCard.setOnClickListener(v -> {
             Intent intent = new Intent(
                     DashboardActivity.this,
@@ -33,7 +35,20 @@ public class DashboardActivity extends AppCompatActivity {
             );
             startActivity(intent);
         });
+        dietBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    DashboardActivity.this,
+                    DietActivity.class
+            );
+            startActivity(intent);
+        });
+        CardView sleepCard = findViewById(R.id.sleepCard);
+        sleepCard.setOnClickListener(v ->
+                startActivity(new Intent(this, SleepActivity.class))
+        );
+
     }
+
 
     private void checkUser() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
