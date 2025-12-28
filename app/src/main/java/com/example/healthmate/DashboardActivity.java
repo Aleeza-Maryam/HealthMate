@@ -19,6 +19,7 @@ public class DashboardActivity extends AppCompatActivity {
     CardView waterCard;
     CardView sleepcard;
     CardView dietBtn;
+    CardView symptombtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,14 @@ public class DashboardActivity extends AppCompatActivity {
         sleepCard.setOnClickListener(v ->
                 startActivity(new Intent(this, SleepActivity.class))
         );
-
+        CardView symptombtn= findViewById(R.id.symptomBtn);
+        symptombtn.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    DashboardActivity.this,
+                    SymptomActivity.class
+            );
+            startActivity(intent);
+        });
     }
 
 
