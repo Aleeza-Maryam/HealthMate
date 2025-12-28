@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🍎 Diet Tracker"
+            android:text=" Diet Tracker"
             android:textSize="28sp"
             android:textStyle="bold"
             android:textColor="@color/white"
@@ -43,7 +43,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🔥 Total Calories Today"
+                    android:text=" Total Calories Today"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/dark_purple"/>
@@ -145,7 +145,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" 🍎 "
+                        android:text=" Apple "
                         android:textSize="14sp"
                         android:textColor="@color/blue"
                         android:onClick="onAppleClick"
@@ -154,7 +154,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" 🥛 "
+                        android:text=" milk "
                         android:textSize="14sp"
                         android:textColor="@color/blue"
                         android:onClick="onMilkClick"
@@ -163,7 +163,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" 🍗 "
+                        android:text=" Chicken "
                         android:textSize="14sp"
                         android:textColor="@color/blue"
                         android:onClick="onChickenClick"
@@ -190,7 +190,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🎯 Daily Calorie Goal"
+                    android:text=" Daily Calorie Goal"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/dark_purple"/>

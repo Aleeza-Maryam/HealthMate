@@ -26,7 +26,7 @@
                 android:paddingTop="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🌙 Sleep Tracker"
+                android:text=" Sleep Tracker"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:textColor="#7E0065"
@@ -81,8 +81,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="💤"
-                        android:textColor="@color/white"
+
+                        android:textColor="@color/textDark"
                         android:textSize="24sp"
                         android:layout_marginEnd="16dp"/>
 
@@ -91,10 +91,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textColor="@color/white"
                         android:hint="e.g., 7.5 hours"
                         android:inputType="numberDecimal"
                         android:textSize="18sp"
-                        android:textColor="#FFFAFA"
                         android:background="@null"
                         android:padding="0dp"/>
 
@@ -113,7 +113,7 @@
                     android:id="@+id/btnSaveSleep"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
-                    android:text="💾 SAVE SLEEP LOG"
+                    android:text=" SAVE SLEEP LOG"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="#FFFFFF"
@@ -141,7 +141,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="📊 Your Sleep Status"
+                    android:text=" Your Sleep Status"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="#2196F3"
@@ -178,7 +178,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="⭐ Sleep Quality Guide"
+                    android:text=" Sleep Quality Guide"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="#E91E63"
@@ -194,7 +194,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="😴 0-5 hours"
+                        android:text=" 0-5 hours"
                         android:textSize="14sp"
                         android:textColor="#666666"/>
 
@@ -217,7 +217,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="😊 6-7 hours"
+                        android:text=" 6-7 hours"
                         android:textSize="14sp"
                         android:textColor="#666666"/>
 
@@ -239,7 +239,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="😄 8-9 hours"
+                        android:text=" 8-9 hours"
                         android:textSize="14sp"
                         android:textColor="#666666"/>
 
@@ -271,7 +271,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="💡 Sleep Better Tips"
+                    android:text=" Sleep Better Tips"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="#9C27B0"

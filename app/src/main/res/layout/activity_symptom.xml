@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🏥 Symptom Checker"
+                android:text=" Symptom Checker"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
@@ -93,7 +93,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="🤒 Fever"
+                            android:text=" Fever"
                             android:textSize="18sp"
                             android:textColor="#333333"
                             android:layout_marginStart="12dp"/>
@@ -123,7 +123,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="😷 Cough"
+                            android:text=" Cough"
                             android:textSize="18sp"
                             android:textColor="#333333"
                             android:layout_marginStart="12dp"/>
@@ -153,7 +153,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="🤕 Headache"
+                            android:text="Headache"
                             android:textSize="18sp"
                             android:textColor="#333333"
                             android:layout_marginStart="12dp"/>
@@ -183,7 +183,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="😴 Fatigue"
+                            android:text=" Fatigue"
                             android:textSize="18sp"
                             android:textColor="#333333"
                             android:layout_marginStart="12dp"/>
@@ -211,10 +211,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="🫤 Sore Throat"
-                            android:textSize="18sp"
+                            android:layout_marginStart="12dp"
+                            android:text=" Sore Throat"
                             android:textColor="#333333"
-                            android:layout_marginStart="12dp"/>
+                            android:textSize="18sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -223,7 +223,7 @@
                     android:id="@+id/btnCheck"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
-                    android:text="🔍 CHECK CONDITION"
+                    android:text=" CHECK CONDITION"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="#FFFFFF"
@@ -252,7 +252,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="📋 Analysis Result"
+                    android:text=" Analysis Result"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="#2196F3"
@@ -271,7 +271,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="💡 Recommended Advice"
+                    android:text=" Recommended Advice"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="#9C27B0"
@@ -305,7 +305,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="📚 Common Conditions"
+                    android:text=" Common Conditions"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="#E91E63"
@@ -321,7 +321,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="🤧 Cold"
+                        android:text=" Cold"
                         android:textSize="14sp"
                         android:textColor="#666666"/>
 
@@ -343,7 +343,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="🤒 Flu"
+                        android:text=" Flu"
                         android:textSize="14sp"
                         android:textColor="#666666"/>
 
@@ -364,7 +364,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="🦠 COVID-19"
+                        android:text=" COVID-19"
                         android:textSize="14sp"
                         android:textColor="#666666"/>
 
