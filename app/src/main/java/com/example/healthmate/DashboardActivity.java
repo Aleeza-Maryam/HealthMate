@@ -80,16 +80,22 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ProfileActivity.class))
         );
 
-        chatbotBtn.setOnClickListener(v -> {
-            Toast.makeText(this, "Chatbot feature coming soon", Toast.LENGTH_SHORT).show();
-        });
+        // Replace the placeholder with actual activity launch
+       // chatbotBtn.setOnClickListener(v -> {
+         //   Intent intent = new Intent(DashboardActivity.this, ChatbotActivity.class);
+          //  startActivity(intent);
+       // });
 
         emergencyBtn.setOnClickListener(v -> {
             Toast.makeText(this, "Emergency contact: 112", Toast.LENGTH_SHORT).show();
         });
 
         reportsBtn.setOnClickListener(v -> {
-            Toast.makeText(this, "Reports feature coming soon", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(
+                    DashboardActivity.this,
+                    ReportsActivity.class
+            );
+            startActivity(intent);
         });
     }
 
