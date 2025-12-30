@@ -436,7 +436,6 @@
                     <ImageView
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:src="@drawable/ic_chatbot"
                         app:tint="#00BCD4"
                         android:scaleType="centerInside"/>
 

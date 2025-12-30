@@ -81,10 +81,11 @@ public class DashboardActivity extends AppCompatActivity {
         );
 
         // Replace the placeholder with actual activity launch
-       // chatbotBtn.setOnClickListener(v -> {
-         //   Intent intent = new Intent(DashboardActivity.this, ChatbotActivity.class);
-          //  startActivity(intent);
-       // });
+        chatbotBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, ChatbotActivity.class);
+            startActivity(intent);
+        });
+
 
         emergencyBtn.setOnClickListener(v -> {
             Toast.makeText(this, "Emergency contact: 112", Toast.LENGTH_SHORT).show();
