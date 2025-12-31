@@ -88,7 +88,8 @@ public class DashboardActivity extends AppCompatActivity {
 
 
         emergencyBtn.setOnClickListener(v -> {
-            Toast.makeText(this, "Emergency contact: 112", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(DashboardActivity.this, EmergencyActivity.class);
+            startActivity(intent);
         });
 
         reportsBtn.setOnClickListener(v -> {
