@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🍎 Personalized Diet"
+                android:text=" Personalized Diet"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:textColor="#4CAF50"/>
@@ -53,7 +53,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="📊 Your Weight Profile"
+                android:text=" Your Weight Profile"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#333333"
@@ -123,7 +123,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🎯 Select Your Goal"
+                android:text=" Select Your Goal"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#333333"
@@ -181,7 +181,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🏃‍♂️ Activity Level"
+                android:text=" Activity Level"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#333333"
@@ -200,7 +200,7 @@
             android:id="@+id/btnGenerateDiet"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="✨ GENERATE DIET PLAN"
+            android:text=" GENERATE DIET PLAN"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@android:color/white"
@@ -305,7 +305,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="💡 Diet Tips"
+                android:text=" Diet Tips"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="#333333"
