@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    EditText name, age, weight, height;
+    EditText name, age, height;
     TextView genderText;
     LinearLayout genderContainer;
     Button saveBtn;
@@ -49,7 +49,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         name = findViewById(R.id.fullName);
         age = findViewById(R.id.age);
-        weight = findViewById(R.id.weight);
         height = findViewById(R.id.height);
         saveBtn = findViewById(R.id.saveProfileBtn);
         genderText = findViewById(R.id.genderText);
@@ -79,7 +78,6 @@ public class ProfileActivity extends AppCompatActivity {
     private void saveProfile() {
         String n = name.getText().toString().trim();
         String a = age.getText().toString().trim();
-        String w = weight.getText().toString().trim();
         String h = height.getText().toString().trim();
 
         if (n.isEmpty() || a.isEmpty() || selectedGender.isEmpty()) {
@@ -91,7 +89,6 @@ public class ProfileActivity extends AppCompatActivity {
         map.put("fullName", n);
         map.put("age", a);
         map.put("gender", selectedGender);
-        map.put("weight", w);
         map.put("height", h);
         map.put("profileCompleted", true);
 
@@ -99,64 +96,82 @@ public class ProfileActivity extends AppCompatActivity {
             Toast.makeText(this, "Profile Saved", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, DashboardActivity.class));
             finish();
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 
     private void loadUserData() {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot s) {
-                if (s.exists()) {
-                    name.setText(s.child("fullName").getValue(String.class));
-                    age.setText(s.child("age").getValue(String.class));
-                    weight.setText(s.child("weight").getValue(String.class));
-                    height.setText(s.child("height").getValue(String.class));
-                    selectedGender = s.child("gender").getValue(String.class);
-                    genderText.setText(selectedGender);
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    name.setText(snapshot.child("fullName").getValue(String.class));
+                    age.setText(snapshot.child("age").getValue(String.class));
+                    height.setText(snapshot.child("height").getValue(String.class));
+                    selectedGender = snapshot.child("gender").getValue(String.class);
+                    if (selectedGender != null && !selectedGender.isEmpty()) {
+                        genderText.setText(selectedGender);
+                    }
                 }
             }
 
-            @Override public void onCancelled(DatabaseError error) {}
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Toast.makeText(ProfileActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
     private void openGallery() {
-        Intent i = new Intent(Intent.ACTION_PICK);
-        i.setType("image/*");
-        startActivityForResult(i, PICK_IMAGE_REQUEST);
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
     @Override
-    protected void onActivityResult(int r, int c, @Nullable Intent d) {
-        super.onActivityResult(r, c, d);
-        if (r == PICK_IMAGE_REQUEST && c == RESULT_OK && d != null) {
-            imageUri = d.getData();
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            imageUri = data.getData();
             profileImage.setImageURI(imageUri);
             uploadImage();
         }
     }
 
     private void uploadImage() {
-        StorageReference ref = storageRef.child(uid + ".jpg");
-        ref.putFile(imageUri).addOnSuccessListener(task ->
-                ref.getDownloadUrl().addOnSuccessListener(uri ->
-                        userRef.child("profileImage").setValue(uri.toString())
-                ));
+        if (imageUri == null) return;
+
+        StorageReference fileRef = storageRef.child(uid + ".jpg");
+        fileRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+            fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                userRef.child("profileImage").setValue(uri.toString());
+                Toast.makeText(this, "Profile image updated", Toast.LENGTH_SHORT).show();
+            });
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, "Image upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void loadProfileImage() {
         userRef.child("profileImage").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot s) {
-                        String url = s.getValue(String.class);
-                        if (url != null)
-                            Glide.with(ProfileActivity.this).load(url)
+                    public void onDataChange(DataSnapshot snapshot) {
+                        String url = snapshot.getValue(String.class);
+                        if (url != null && !url.isEmpty()) {
+                            Glide.with(ProfileActivity.this)
+                                    .load(url)
                                     .placeholder(R.drawable.ic_profile_avatar)
+                                    .circleCrop()
                                     .into(profileImage);
+                        }
                     }
 
-                    @Override public void onCancelled(DatabaseError error) {}
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Silent fail - use default image
+                    }
                 });
     }
 }

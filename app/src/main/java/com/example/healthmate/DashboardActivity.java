@@ -69,7 +69,7 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
         sleepCard.setOnClickListener(v ->
-                startActivity(new Intent(this, SleepActivity.class))
+                startActivity(new Intent(this, DietGeneratorActivity.class))
         );
 
         symptomBtn.setOnClickListener(v -> {
