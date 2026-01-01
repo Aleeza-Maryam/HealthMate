@@ -11,7 +11,7 @@ public class HealthTrackingActivity extends AppCompatActivity {
 
     Button btnAddWater, btnSave;  // Changed from MaterialButton to Button
     TextView txtWater;
-    EditText edtSleep, edtWeight;  // Changed from TextInputEditText to EditText
+    EditText edtSleep;  // Removed edtWeight
 
     int waterCount = 0;
 
@@ -28,7 +28,7 @@ public class HealthTrackingActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         txtWater = findViewById(R.id.txtWater);
         edtSleep = findViewById(R.id.edtSleep);
-        edtWeight = findViewById(R.id.edtWeight);
+        // Removed: edtWeight = findViewById(R.id.edtWeight);
 
         // Firebase initialization
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -48,11 +48,10 @@ public class HealthTrackingActivity extends AppCompatActivity {
 
     private void saveData() {
         String sleep = edtSleep.getText().toString();
-        String weight = edtWeight.getText().toString();
 
         healthRef.child("water").setValue(waterCount);
         healthRef.child("sleep").setValue(sleep);
-        healthRef.child("weight").setValue(weight);
+        // Removed: healthRef.child("weight").setValue(weight);
 
         Toast.makeText(this, "✓ Health Data Saved Successfully!", Toast.LENGTH_SHORT).show();
     }
@@ -69,9 +68,7 @@ public class HealthTrackingActivity extends AppCompatActivity {
                     if (snapshot.child("sleep").exists()) {
                         edtSleep.setText(snapshot.child("sleep").getValue(String.class));
                     }
-                    if (snapshot.child("weight").exists()) {
-                        edtWeight.setText(snapshot.child("weight").getValue(String.class));
-                    }
+                    // Removed: weight loading
                 }
             }
 

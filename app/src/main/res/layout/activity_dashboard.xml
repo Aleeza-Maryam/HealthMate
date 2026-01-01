@@ -54,13 +54,40 @@
                     android:textColor="#FFFFFF"/>
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/ic_notification"
-                app:tint="#FFFFFF"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="6dp"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/notificationIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_notification"
+                    app:tint="#FFFFFF"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="6dp"
+                    android:clickable="true"
+                    android:focusable="true"/>
+                <Button
+                    android:id="@+id/btnWaterReminder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start Water Reminder"/>
+
+                <!-- Badge for unread count -->
+                <TextView
+                    android:id="@+id/notificationBadge"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/notification_badge_bg"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp"
+                    android:visibility="gone"/>
+            </RelativeLayout>
         </LinearLayout>
 
         <!-- Stats Cards -->
@@ -166,7 +193,7 @@
             android:text="Health Features"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="#333333"
+            android:textColor="#FFFFFF"
             android:layout_marginBottom="16dp"
             android:layout_marginStart="4dp"/>
 
@@ -202,8 +229,7 @@
                     <ImageView
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:src="@drawable/login1"
-                        app:tint="#6A5AE0"
+                        android:src="@drawable/loginlogo"
                         android:scaleType="centerInside"/>
 
                     <TextView
@@ -434,9 +460,10 @@
                     android:padding="12dp">
 
                     <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        app:tint="#00BCD4"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_chatbot"
+                        app:tint="#2F95E9"
                         android:scaleType="centerInside"/>
 
                     <TextView

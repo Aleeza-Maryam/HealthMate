@@ -1,22 +1,33 @@
 package com.example.healthmate;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.*;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class DashboardActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference userRef;
     private CardView waterCard, dietBtn, sleepCard, symptomBtn, weightBtn;
+    private ImageView notificationIcon;
+    private Button btnWaterReminder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +37,19 @@ public class DashboardActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         checkUser();
 
-        // Initialize CardViews (NOT Buttons)
-        waterCard = findViewById(R.id.waterCard);
-        dietBtn = findViewById(R.id.dietBtn);
-        sleepCard = findViewById(R.id.sleepCard);
-        symptomBtn = findViewById(R.id.symptomBtn);
-        weightBtn = findViewById(R.id.weightBtn);
+        // Initialize CardViews
+        // Initialize CardViews (as CardView, not Button)
+        CardView waterCard = findViewById(R.id.waterCard);
+        CardView dietBtn = findViewById(R.id.dietBtn);
+        CardView sleepCard = findViewById(R.id.sleepCard);
+        CardView symptomBtn = findViewById(R.id.symptomBtn);
+        CardView weightBtn = findViewById(R.id.weightBtn);
+
+        // Initialize Buttons
+        btnWaterReminder = findViewById(R.id.btnWaterReminder);
+
+        // Initialize Notification Icon
+        notificationIcon = findViewById(R.id.notificationIcon);
 
         // Set click listeners for CardViews
         waterCard.setOnClickListener(v -> {
@@ -80,12 +98,10 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ProfileActivity.class))
         );
 
-        // Replace the placeholder with actual activity launch
         chatbotBtn.setOnClickListener(v -> {
             Intent intent = new Intent(DashboardActivity.this, ChatbotActivity.class);
             startActivity(intent);
         });
-
 
         emergencyBtn.setOnClickListener(v -> {
             Intent intent = new Intent(DashboardActivity.this, EmergencyActivity.class);
@@ -99,6 +115,61 @@ public class DashboardActivity extends AppCompatActivity {
             );
             startActivity(intent);
         });
+
+        // Set click listeners for buttons
+        btnWaterReminder.setOnClickListener(v -> startWaterReminder());
+
+        // Notification Icon click listener
+        if (notificationIcon != null) {
+            notificationIcon.setOnClickListener(v -> openNotifications());
+        }
+    }
+
+    // Method to open Notifications Activity
+    private void openNotifications() {
+        Intent intent = new Intent(DashboardActivity.this, NotificationHelper.class);
+        startActivity(intent);
+    }
+
+    // Water Reminder Method
+    private void startWaterReminder() {
+        try {
+            // Create notification channel (for Android 8.0+)
+            NotificationHelper.createChannel(this);
+
+            // Create intent for BroadcastReceiver
+            Intent intent = new Intent(this, WaterReminderReceiver.class);
+
+            // Create PendingIntent
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                    this,
+                    0,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+            );
+
+            // Get AlarmManager
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+            // Set interval (30 minutes)
+            long interval = 5 * 1000; // 1 minute in milliseconds
+
+            // Set repeating alarm
+            if (alarmManager != null) {
+                alarmManager.setRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        System.currentTimeMillis() + interval,
+                        interval,
+                        pendingIntent
+                );
+
+                Toast.makeText(this, "💧 Water reminder started!", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Failed to start water reminder: " + e.getMessage(),
+                    Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
     }
 
     private void checkUser() {
@@ -116,7 +187,7 @@ public class DashboardActivity extends AppCompatActivity {
         // Initialize views
         TextView userName = findViewById(R.id.userName);
         TextView welcomeText = findViewById(R.id.welcomeText);
-        Button logoutBtn = findViewById(R.id.logoutBtn); // This is a Button in XML
+        Button logoutBtn = findViewById(R.id.logoutBtn);
 
         // Setup database
         userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
@@ -130,7 +201,7 @@ public class DashboardActivity extends AppCompatActivity {
                             String name = snapshot.getValue(String.class);
                             if (name != null && !name.isEmpty()) {
                                 userName.setText(name);
-                                welcomeText.setText("Welcome back, " + name.split(" ")[0] + "!");
+                                welcomeText.setText("Welcome back, ");
                             }
                         }
                     }
@@ -210,7 +281,7 @@ public class DashboardActivity extends AppCompatActivity {
             score += 10;
         }
 
-        return Math.min(score, 100); // Cap at 100
+        return Math.min(score, 100);
     }
 
     private String formatSteps(String steps) {
@@ -236,7 +307,6 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Clean up to prevent memory leaks
         mAuth = null;
         userRef = null;
     }
