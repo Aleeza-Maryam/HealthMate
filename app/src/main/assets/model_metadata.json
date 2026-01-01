@@ -1,0 +1,26 @@
+{
+  "disease_names": [
+    "Common Cold",
+    "Influenza",
+    "Migraine",
+    "Food Poisoning",
+    "COVID-19",
+    "Bronchitis"
+  ],
+  "symptom_names": [
+    "Runny Nose",
+    "Cough",
+    "Fever",
+    "Sneezing",
+    "Sore Throat",
+    "Headache",
+    "Body Aches"
+  ],
+  "confidence_threshold": 0.7,
+  "accuracy": 0.4925000071525574,
+  "model_version": "1.0",
+  "input_shape": 7,
+  "output_classes": 6,
+  "last_updated": "2024-01-01",
+  "warning": "FOR INFORMATIONAL PURPOSES ONLY. CONSULT A DOCTOR FOR MEDICAL ADVICE."
+}

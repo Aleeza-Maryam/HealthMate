@@ -3,298 +3,236 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
-    android:fillViewport="true">
+    android:padding="16dp"
+    android:background="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/pink"
-        android:padding="24dp">
+        android:orientation="vertical">
 
         <!-- Header -->
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:text="🩺 AI Symptom Checker"
+            android:textSize="24sp"
+            android:textStyle="bold"
             android:gravity="center"
-            android:layout_marginBottom="30dp">
+            android:paddingBottom="16dp"
+            android:textColor="#2196F3"/>
 
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/ic_symptom"
-                android:layout_marginBottom="16dp"/>
+        <!-- Instructions -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select all symptoms you're experiencing:"
+            android:textSize="16sp"
+            android:paddingBottom="8dp"
+            android:textColor="#333333"/>
 
+        <!-- 7 Symptom Checkboxes (with clickable layouts) -->
+
+        <!-- 1. Runny Nose -->
+        <LinearLayout
+            android:id="@+id/layoutRunnyNose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="4dp">
+            <CheckBox
+                android:id="@+id/cbRunnyNose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:buttonTint="#2196F3"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Symptom Checker"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:shadowColor="#7B61FF"
-                android:shadowRadius="4"/>
+                android:text="Runny or stuffy nose"
+                android:textSize="16sp"
+                android:textColor="#333333"/>
         </LinearLayout>
 
-        <!-- Symptoms Card -->
-        <androidx.cardview.widget.CardView
+        <!-- 2. Cough -->
+        <LinearLayout
+            android:id="@+id/layoutCough"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="8dp"
-            app:cardBackgroundColor="#FFFFFF"
-            android:layout_marginBottom="25dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="4dp">
+            <CheckBox
+                android:id="@+id/cbCough"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="28dp">
+                android:layout_marginEnd="12dp"
+                android:buttonTint="#2196F3"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cough (dry or with phlegm)"
+                android:textSize="16sp"
+                android:textColor="#333333"/>
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Select Your Symptoms"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:textColor="#9C27B0"
-                    android:layout_marginBottom="20dp"/>
-
-                <!-- Symptom Checkboxes -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="28dp">
-
-                    <!-- Fever -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:paddingVertical="12dp"
-
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:layout_marginBottom="8dp"
-                        android:id="@+id/layoutFever">
-
-                        <CheckBox
-                            android:id="@+id/cbFever"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="#9C27B0"
-                            android:scaleX="1.2"
-                            android:scaleY="1.2"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" Fever"
-                            android:textSize="18sp"
-                            android:textColor="#333333"
-                            android:layout_marginStart="12dp"/>
-                    </LinearLayout>
-
-                    <!-- Cough -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:paddingVertical="12dp"
-
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:layout_marginBottom="8dp"
-                        android:id="@+id/layoutCough">
-
-                        <CheckBox
-                            android:id="@+id/cbCough"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="#2196F3"
-                            android:scaleX="1.2"
-                            android:scaleY="1.2"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" Cough"
-                            android:textSize="18sp"
-                            android:textColor="#333333"
-                            android:layout_marginStart="12dp"/>
-                    </LinearLayout>
-
-                    <!-- Headache -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:paddingVertical="12dp"
-
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:layout_marginBottom="8dp"
-                        android:id="@+id/layoutHeadache">
-
-                        <CheckBox
-                            android:id="@+id/cbHeadache"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="#E91E63"
-                            android:scaleX="1.2"
-                            android:scaleY="1.2"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Headache"
-                            android:textSize="18sp"
-                            android:textColor="#333333"
-                            android:layout_marginStart="12dp"/>
-                    </LinearLayout>
-
-                    <!-- Fatigue -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:paddingVertical="12dp"
-
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:layout_marginBottom="8dp"
-                        android:id="@+id/layoutFatigue">
-
-                        <CheckBox
-                            android:id="@+id/cbFatigue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="#9C27B0"
-                            android:scaleX="1.2"
-                            android:scaleY="1.2"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" Fatigue"
-                            android:textSize="18sp"
-                            android:textColor="#333333"
-                            android:layout_marginStart="12dp"/>
-                    </LinearLayout>
-
-                    <!-- Sore Throat -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:paddingVertical="12dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:id="@+id/layoutThroat">
-
-                        <CheckBox
-                            android:id="@+id/cbThroat"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="#2196F3"
-                            android:scaleX="1.2"
-                            android:scaleY="1.2"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:text=" Sore Throat"
-                            android:textColor="#333333"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Check Button -->
-                <Button
-                    android:id="@+id/btnCheck"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:text=" CHECK CONDITION"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:background="@drawable/rounded_button_gradient"
-                    android:padding="0dp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Result Card -->
-        <androidx.cardview.widget.CardView
+        <!-- 3. Fever -->
+        <LinearLayout
+            android:id="@+id/layoutFever"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="8dp"
-            app:cardBackgroundColor="#E8F4FD"
-            android:layout_marginBottom="25dp"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="4dp">
+            <CheckBox
+                android:id="@+id/cbFever"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:buttonTint="#2196F3"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fever (above 38°C)"
+                android:textSize="16sp"
+                android:textColor="#333333"/>
+        </LinearLayout>
+
+        <!-- 4. Sneezing -->
+        <LinearLayout
+            android:id="@+id/layoutSneezing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="4dp">
+            <CheckBox
+                android:id="@+id/cbSneezing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:buttonTint="#2196F3"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sneezing frequently"
+                android:textSize="16sp"
+                android:textColor="#333333"/>
+        </LinearLayout>
+
+        <!-- 5. Sore Throat -->
+        <LinearLayout
+            android:id="@+id/layoutSoreThroat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="4dp">
+            <CheckBox
+                android:id="@+id/cbSoreThroat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:buttonTint="#2196F3"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sore throat"
+                android:textSize="16sp"
+                android:textColor="#333333"/>
+        </LinearLayout>
+
+        <!-- 6. Headache -->
+        <LinearLayout
+            android:id="@+id/layoutHeadache"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="4dp">
+            <CheckBox
+                android:id="@+id/cbHeadache"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:buttonTint="#2196F3"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Headache"
+                android:textSize="16sp"
+                android:textColor="#333333"/>
+        </LinearLayout>
+
+        <!-- 7. Body Aches -->
+        <LinearLayout
+            android:id="@+id/layoutBodyAches"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="16dp">
+            <CheckBox
+                android:id="@+id/cbBodyAches"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:buttonTint="#2196F3"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Body aches or fatigue"
+                android:textSize="16sp"
+                android:textColor="#333333"/>
+        </LinearLayout>
+
+        <!-- Check Button -->
+        <Button
+            android:id="@+id/btnCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🤖 Analyze with AI"
+            android:textSize="18sp"
+            android:padding="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="#4CAF50"
+            android:textColor="#FFFFFF"
+            android:stateListAnimator="@null"
+            android:elevation="4dp"/>
+
+        <!-- Results Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:visibility="gone"
-            android:id="@+id/cardResult">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="24dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" Analysis Result"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:textColor="#2196F3"
-                    android:layout_marginBottom="16dp"/>
-
-                <TextView
-                    android:id="@+id/txtResult"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No symptoms selected"
-                    android:textSize="18sp"
-                    android:textColor="#333333"
-                    android:lineSpacingExtra="8dp"
-                    android:layout_marginBottom="20dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" Recommended Advice"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="#9C27B0"
-                    android:layout_marginBottom="12dp"/>
-
-                <TextView
-                    android:id="@+id/txtAdvice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Select symptoms and click check"
-                    android:textSize="16sp"
-                    android:textColor="#666666"
-                    android:lineSpacingExtra="6dp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Common Conditions Card -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="12dp"
             app:cardElevation="6dp"
-            app:cardBackgroundColor="#FCE4EC">
+            app:cardBackgroundColor="#F8F9FA"
+            android:layout_marginBottom="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -302,81 +240,71 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
+                <!-- Result Title -->
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=" Common Conditions"
+                    android:text="🔍 Diagnosis Results"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#2196F3"
+                    android:paddingBottom="16dp"/>
+
+                <!-- Result -->
+                <TextView
+                    android:id="@+id/txtResult"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="#E91E63"
-                    android:layout_marginBottom="16dp"/>
+                    android:textColor="#333333"
+                    android:paddingBottom="12dp"
+                    android:lineSpacingExtra="4dp"/>
 
-                <LinearLayout
+                <!-- Confidence -->
+                <TextView
+                    android:id="@+id/txtConfidence"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="12dp">
+                    android:textSize="14sp"
+                    android:textColor="#666666"
+                    android:paddingBottom="16dp"
+                    android:lineSpacingExtra="2dp"/>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text=" Cold"
-                        android:textSize="14sp"
-                        android:textColor="#666666"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Fever, Cough"
-                        android:textSize="14sp"
-                        android:textColor="#2196F3"/>
-                </LinearLayout>
-
-                <LinearLayout
+                <!-- Advice Title -->
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="12dp">
+                    android:text="📋 Recommendations:"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:paddingBottom="8dp"/>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text=" Flu"
-                        android:textSize="14sp"
-                        android:textColor="#666666"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Fever, Fatigue"
-                        android:textSize="14sp"
-                        android:textColor="#E91E63"/>
-                </LinearLayout>
-
-                <LinearLayout
+                <!-- Advice -->
+                <TextView
+                    android:id="@+id/txtAdvice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:textSize="14sp"
+                    android:textColor="#444444"
+                    android:lineSpacingExtra="6dp"/>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text=" COVID-19"
-                        android:textSize="14sp"
-                        android:textColor="#666666"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Fever, Cough, Fatigue"
-                        android:textSize="14sp"
-                        android:textColor="#9C27B0"/>
-                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+        <!-- Disclaimer -->
+        <TextView
+            android:id="@+id/txtDisclaimer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="⚠️ IMPORTANT: This tool is for informational purposes only. It is NOT a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition."
+            android:textSize="12sp"
+            android:textColor="#D32F2F"
+            android:padding="16dp"
+            android:background="#FFEBEE"
+            android:layout_marginTop="8dp"
+            android:lineSpacingExtra="4dp"/>
 
     </LinearLayout>
 </ScrollView>
